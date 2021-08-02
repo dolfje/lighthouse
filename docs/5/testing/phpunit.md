@@ -127,7 +127,7 @@ public function testOrdersUsersByName(): void
 ### TestResponse Assertion Mixins
 
 Lighthouse conveniently provides additional assertions as mixins to the `TestResponse` class.
-Make sure to generate the latest [IDE-helper file](/_ide_helper.php) to get proper autocompletion:
+Make sure to [generate the latest IDE-helper file](../api-reference/commands.md#ide-helper) to get proper autocompletion:
 
 ```bash
 php artisan lighthouse:ide-helper
@@ -145,6 +145,39 @@ $this
     }
     ')
     ->assertGraphQLValidationKeys(['email']);
+```
+
+## Testing Errors
+
+Depending on your debug and error handling configuration, Lighthouse catches most if
+not all errors produced within queries and includes them within the result.
+
+One way to test for errors is to examine the `TestResponse`, either by looking
+at the JSON response manually or by using the provided [assertion mixins](#testresponse-assertion-mixins)
+such as `assertGraphQLErrorMessage()`:
+
+```php
+$this
+    ->graphQL(/** @lang GraphQL */ '
+    mutation {
+        shouldTriggerSomeError
+    }
+    ')
+    ->assertGraphQLErrorMessage($expectedMessage);
+```
+
+Another way is to leverage PHPUnit's built-in methods such as `expectException()`.
+You must disable Lighthouse's error handling with `rethrowGraphQLErrors()` to ensure errors reach your test:
+
+```php
+$this->rethrowGraphQLErrors();
+
+$this->expectException(SomethingWentWrongException::class);
+$this->graphQL(/** @lang GraphQL */ '
+{
+    oops
+}
+');
 ```
 
 ## Simulating File Uploads

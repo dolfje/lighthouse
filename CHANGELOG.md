@@ -9,6 +9,76 @@ You can find and compare releases at the [GitHub release page](https://github.co
 
 ## Unreleased
 
+## v5.17.0
+
+### Added
+
+- Add support for custom rules that reference other arguments https://github.com/nuwave/lighthouse/pull/1903
+
+## v5.16.2
+
+### Fixed
+
+- Allow using date validation rules that reference other arguments https://github.com/nuwave/lighthouse/pull/1900
+
+## v5.16.1
+
+### Fixed
+
+- Fix `ValidationErrorHandler` returned error type https://github.com/nuwave/lighthouse/commit/e9f97c117a50aab3c61cb104628696a97b5bfa2b
+
+## v5.16.0
+
+### Added
+
+- Add `ValidationException::fromLaravel()` and `ValidationErrorHandler` to include validation messages in extensions https://github.com/nuwave/lighthouse/pull/1899
+
+## v5.15.3
+
+### Changed
+
+- Provide context for syntax errors thrown during schema parsing https://github.com/nuwave/lighthouse/pull/1892
+
+## v5.15.2
+
+### Fixed
+
+- Fix usage of validation rules with chained query builders with `@validator` https://github.com/nuwave/lighthouse/pull/1890
+
+## v5.15.1
+
+### Fixed
+
+- Call `lighthouse:clear-cache` in other commands to handle schema cache version 2 https://github.com/nuwave/lighthouse/pull/1894
+
+## v5.15.0
+
+### Added
+
+- Add method `rethrowGraphQLErrors()` to testing helper to leverage PHPUnit exception testing https://github.com/nuwave/lighthouse/pull/1885
+
+## v5.14.0
+
+### Added
+
+- Add config setting `cache.version` to use a PHP file for the schema cache and leverage OPcache https://github.com/nuwave/lighthouse/pull/1842
+
+## v5.13.1
+
+### Fixed
+
+- Fix model name determination when using interfaces https://github.com/nuwave/lighthouse/pull/1882
+
+## v5.13.0
+
+### Added
+
+- Add config setting `non_null_pagination_results` to mark the generated result type of paginated lists as non-nullable https://github.com/nuwave/lighthouse/pull/1878
+
+### Changed
+
+- Improve descriptions of generated pagination types https://github.com/nuwave/lighthouse/pull/1878
+
 ## v5.12.7
 
 ### Fixed

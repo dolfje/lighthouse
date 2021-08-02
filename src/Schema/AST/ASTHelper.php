@@ -9,6 +9,7 @@ use GraphQL\Language\AST\DirectiveDefinitionNode;
 use GraphQL\Language\AST\DirectiveNode;
 use GraphQL\Language\AST\FieldDefinitionNode;
 use GraphQL\Language\AST\InputValueDefinitionNode;
+use GraphQL\Language\AST\InterfaceTypeDefinitionNode;
 use GraphQL\Language\AST\NamedTypeNode;
 use GraphQL\Language\AST\Node;
 use GraphQL\Language\AST\NodeList;
@@ -224,8 +225,6 @@ class ASTHelper
 
     /**
      * Attach directive to all registered object type fields.
-     *
-     * @param  \Nuwave\Lighthouse\Schema\AST\DocumentAST  $documentAST
      */
     public static function attachDirectiveToObjectTypeFields(DocumentAST $documentAST, DirectiveNode $directive): void
     {
@@ -391,7 +390,7 @@ class ASTHelper
             $definitionNode = static::underlyingType($definitionNode);
         }
 
-        if ($definitionNode instanceof ObjectTypeDefinitionNode) {
+        if ($definitionNode instanceof ObjectTypeDefinitionNode || $definitionNode instanceof InterfaceTypeDefinitionNode) {
             return ModelDirective::modelClass($definitionNode)
                 ?? $definitionNode->name->value;
         }

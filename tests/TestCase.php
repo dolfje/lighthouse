@@ -4,6 +4,7 @@ namespace Tests;
 
 use GraphQL\Error\DebugFlag;
 use GraphQL\Type\Schema;
+use Illuminate\Console\Application as ConsoleApplication;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -156,6 +157,8 @@ GRAPHQL;
         $config->set('lighthouse.federation', [
             'entities_resolver_namespace' => 'Tests\\Utils\\Entities',
         ]);
+
+        $config->set('lighthouse.cache.enable', false);
     }
 
     /**
@@ -180,7 +183,7 @@ GRAPHQL;
     /**
      * Build an executable schema from a SDL string, adding on a default Query type.
      */
-    protected function buildSchemaWithPlaceholderQuery(string $schema): Schema
+    protected function buildSchemaWithPlaceholderQuery(string $schema = ''): Schema
     {
         return $this->buildSchema(
             $schema.self::PLACEHOLDER_QUERY
@@ -214,6 +217,9 @@ GRAPHQL;
     protected function commandTester(Command $command): CommandTester
     {
         $command->setLaravel($this->app);
+        $command->setApplication($this->app->make(ConsoleApplication::class, [
+            'version' => $this->app->version(),
+        ]));
 
         return new CommandTester($command);
     }
